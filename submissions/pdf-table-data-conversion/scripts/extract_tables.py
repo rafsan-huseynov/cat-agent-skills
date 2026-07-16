@@ -182,6 +182,12 @@ def main(argv=None):
                     worksheet = workbook.create_sheet(title=title)
                     for row in grid:
                         worksheet.append(row)
+                        # Force every cell to text so values are preserved
+                        # verbatim — otherwise a cell like "=high" or "-5" would
+                        # be interpreted by openpyxl/Excel as a formula and lose
+                        # its original value.
+                        for cell in worksheet[worksheet.max_row]:
+                            cell.data_type = "s"
                     style_sheet(worksheet, grid)
                     entry["sheet"] = title
 
