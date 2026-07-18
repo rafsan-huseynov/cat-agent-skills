@@ -155,67 +155,21 @@ Quadrant meanings:
 
 ### 5b. Rendered PNG chart via code interpreter
 
-If the code interpreter tool is available in the environment, invoke it with the Python script below. Substitute the three placeholder tokens with the values from the interview:
+If the code interpreter tool is available in the environment, run the bundled
+`scripts/effort_profile_chart.py`, passing the values from the interview as
+arguments:
 
-- `{{PROJECT_NAME}}` → the project name string from Q1
-- `{{COMPLEXITY_SCORE}}` → the integer 0–10 from Phase 3 sum
-- `{{RISK_SCORE}}` → the integer 0–10 from Phase 4 sum
-
-The script renders a 2×2 quadrant chart with the four quadrants labeled with planning guidance, plots the project as a labeled orange point, and saves the image as `effort_profile.png`.
-
-```python
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
-
-PROJECT_NAME = "{{PROJECT_NAME}}"
-COMPLEXITY_SCORE = {{COMPLEXITY_SCORE}}
-RISK_SCORE = {{RISK_SCORE}}
-
-fig, ax = plt.subplots(figsize=(11, 8))
-
-# Quadrant background fills
-ax.add_patch(Rectangle((0, 5), 5, 5, facecolor="#fdecea", alpha=0.5, zorder=0))
-ax.add_patch(Rectangle((5, 5), 5, 5, facecolor="#f3e5f5", alpha=0.5, zorder=0))
-ax.add_patch(Rectangle((0, 0), 5, 5, facecolor="#e8f5e9", alpha=0.5, zorder=0))
-ax.add_patch(Rectangle((5, 0), 5, 5, facecolor="#e3f2fd", alpha=0.5, zorder=0))
-
-# Quadrant labels
-label_style = dict(ha="center", va="center", fontsize=10, wrap=True)
-ax.text(2.5, 8.2, "GOVERN HARD, SHIP FAST", fontweight="bold", color="#c92a2a", fontsize=11, ha="center")
-ax.text(2.5, 7.2, "Agent 365 blueprint + DLP\nfrom day one", color="#c92a2a", **label_style)
-ax.text(7.5, 8.2, "PoC → PHASED ROLLOUT", fontweight="bold", color="#862e9c", fontsize=11, ha="center")
-ax.text(7.5, 7.2, "Exec sponsor, dedicated ALM,\nevaluations before every release", color="#862e9c", **label_style)
-ax.text(2.5, 3.2, "MOVE FAST, ITERATE", fontweight="bold", color="#2b8a3e", fontsize=11, ha="center")
-ax.text(2.5, 2.2, "Pilot with one team,\nexpand quickly", color="#2b8a3e", **label_style)
-ax.text(7.5, 3.2, "INVEST IN ENGINEERING", fontweight="bold", color="#1864ab", fontsize=11, ha="center")
-ax.text(7.5, 2.2, "Foundry + evaluations,\nclear ALM environments", color="#1864ab", **label_style)
-
-# Dividers
-ax.axhline(y=5, color="#a0a0a0", linestyle="--", linewidth=1, zorder=1)
-ax.axvline(x=5, color="#a0a0a0", linestyle="--", linewidth=1, zorder=1)
-
-# Plot point
-ax.scatter([COMPLEXITY_SCORE], [RISK_SCORE], s=400, c="#ff922b", edgecolors="#1e1e1e", linewidths=2, zorder=5)
-ax.annotate(f"  {PROJECT_NAME}\n  ({COMPLEXITY_SCORE}/10, {RISK_SCORE}/10)",
-            xy=(COMPLEXITY_SCORE, RISK_SCORE), xytext=(10, 10), textcoords="offset points",
-            fontsize=11, fontweight="bold", zorder=6,
-            bbox=dict(boxstyle="round,pad=0.4", facecolor="white", edgecolor="#1e1e1e", linewidth=1))
-
-# Axes
-ax.set_xlim(0, 10)
-ax.set_ylim(0, 10)
-ax.set_xticks(range(0, 11))
-ax.set_yticks(range(0, 11))
-ax.set_xlabel("Technical complexity  →", fontsize=13, fontweight="bold")
-ax.set_ylabel("Risk  →", fontsize=13, fontweight="bold")
-ax.set_title(f"{PROJECT_NAME} — Effort Profile", fontsize=16, fontweight="bold", pad=15)
-ax.grid(True, alpha=0.2)
-ax.set_axisbelow(True)
-
-plt.tight_layout()
-plt.savefig("effort_profile.png", dpi=150, bbox_inches="tight")
-plt.show()
+```bash
+python scripts/effort_profile_chart.py \
+    --project-name "<project name from Q1>" \
+    --complexity <0–10 integer, Phase 3 sum> \
+    --risk <0–10 integer, Phase 4 sum>
 ```
+
+It renders a 2×2 quadrant chart — the four quadrants labeled with planning
+guidance and the project plotted as a labeled orange point — and saves the image
+as `effort_profile.png`. Depends on `matplotlib`; runs headless. Run it with no
+arguments to produce a sample chart.
 
 **Channel rule (runtime):** images created by code interpreter do NOT render in the Teams or Microsoft 365 Copilot channels — they render in the Copilot Studio test pane, the demo website, and custom web channels. When delivering to Teams or Microsoft 365 Copilot, rely on the Mermaid chart from step 5a instead of the PNG.
 
