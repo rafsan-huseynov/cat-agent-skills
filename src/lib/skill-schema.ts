@@ -27,16 +27,27 @@ export const skillSchema = z.object({
   // the importer, not authored; defaults keep existing skills unchanged.
   type: z.enum(["skill", "plugin", "automation"]).default("skill"),
   tags: z.array(z.string()).nonempty(),
-  author: z.string().optional(),
+  // Human-readable author (person or team) shown on the gallery card and detail
+  // page. Required: every submission must declare who authored it. Comes from
+  // metadata.json.
+  author: z
+    .string({
+      error: (issue) =>
+        issue.input === undefined
+          ? "author is required — add it to the submission's metadata.json"
+          : "author must be a string",
+    })
+    .trim()
+    .min(1, "author must not be empty"),
   // Optional URL to the author's website / profile, shown as a link on the
   // skill page when an `author` is also present.
   authorUrl: z.string().url().optional(),
-  // The GitHub login of the person who submitted the skill (the PR author),
-  // stored WITHOUT a leading `@`. Auto-populated by CI from the pull request
-  // submitter (never authored by hand) so the "skillbot" can @-mention the
-  // author on the first comment of the skill's discussion. A bare GitHub
-  // username: 1-39 chars, alphanumerics or single hyphens, no leading/trailing
-  // hyphen.
+  // The skill author's GitHub login, stored WITHOUT a leading `@`. Resolved by
+  // the importer purely from the submission — an explicit `authorGithub`, else
+  // derived from a `github.com/<login>` `authorUrl`, else unset — never from the
+  // PR/merger login. Used by the "skillbot" to @-mention the author on the first
+  // comment of the skill's discussion. A bare GitHub username: 1-39 chars,
+  // alphanumerics or single hyphens, no leading/trailing hyphen.
   authorGithub: z
     .string()
     .regex(

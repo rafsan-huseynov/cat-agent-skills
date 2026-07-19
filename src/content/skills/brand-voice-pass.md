@@ -3,8 +3,9 @@ name: Brand Voice Pass
 description: "Rewrite drafts into a configurable house style, preserving meaning while removing generic AI phrasing."
 agentDescription: "Use this skill when the user asks to rewrite, humanise, de-AI, polish, localise, or align draft text to a brand voice, house style, named audience, or writing profile."
 platforms: [Cowork, Copilot Studio, Scout]
-tags: [writing, content, voice, style, editing, productivity]
+tags: [writing, content, voice, authoring, productivity]
 author: Simon Owen
+authorUrl: "https://github.com/SimonOwenDigital"
 authorGithub: SimonOwenDigital
 version: 0.1.0
 createdAt: 2026-07-17

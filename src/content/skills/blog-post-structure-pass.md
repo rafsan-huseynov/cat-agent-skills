@@ -3,8 +3,9 @@ name: Blog Post Structure Pass
 description: Restructure draft or existing blog posts into a stronger narrative without inventing new claims.
 agentDescription: "Use this skill when the user asks to restructure, reorganise, improve, rewrite, tighten, or strengthen a blog post, article, newsletter, essay, or thought-leadership draft."
 platforms: [Cowork, Copilot Studio, Scout]
-tags: [blog, writing, editing, content, structure, productivity]
+tags: [blog, writing, authoring, content, structure, productivity]
 author: Simon Owen
+authorUrl: "https://github.com/SimonOwenDigital"
 authorGithub: SimonOwenDigital
 version: 0.1.0
 createdAt: 2026-07-17

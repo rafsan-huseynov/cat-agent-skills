@@ -3,8 +3,9 @@ name: Vacation Urgent Forwarder
 description: "A Scout automation installer that, only during a configured vacation window, scans work email and Teams and forwards genuinely urgent items to your personal email."
 platforms: [Scout]
 type: automation
-tags: [scout, automation, email, teams, out-of-office]
-author: CAT Agent Skills
+tags: [automation, email, teams, out-of-office]
+author: Giorgio Ughini
+authorUrl: "https://github.com/GiorgioUghini"
 authorGithub: GiorgioUghini
 version: 1.0.0
 createdAt: 2026-07-16
